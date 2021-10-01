@@ -1,5 +1,6 @@
 from main import bueno
 from casilla import *
+from nodo import *
 import math
 
 def rellenarDeUnos(mapi, mapaParaMostrar):  # Esta función rellena la matriz que se muestra por la terminal de -1s.
@@ -14,7 +15,7 @@ def esOrigen(i, j, origen): # Esta función te dice si un punto (i, j) es el ori
 
 
 
-def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
+def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar, listaFrontera): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
     cont = 0 # Numero de vecinos que se pueden visitar, osea que no son pared.
     distancia = 1000 # Distancia entre el mejor vecino y el destino.
     
@@ -28,6 +29,9 @@ def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta funci
                 cont += 1 # Aumentamos el contador de vecinos que se pueden visitar.
                 mapaParaMostrar[i][j] = cont # Actualizamos el mapa a mostrar por terminal.
                 distanciaAux = abs(destino.getFila() - i) + abs(destino.getCol() - j) # Calculamos la distancia de Manhattan de un vecino al destino.
+                # listaFrontera.append()
+                
+                nodo = Nodo(casilla, origen, destino) # Creación de un nodo.
                 
                 if distanciaAux <= distancia: # Si la nueva distancia es mayor que la anterior actualizamos el mejor punto.
                     distancia = distanciaAux # Actualizamos la nueva mejor distancia
@@ -42,5 +46,11 @@ def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta funci
             
     print(cont) # Mostramos el numero de vecinos visitados.
     return cont # Y devolvemos ese número, en el futuro se cambiará por el coste.
+
+
+
+
+def aEstrella(mapi, origen, destino, camino):
+    
 
 
