@@ -126,9 +126,6 @@ def main():
                         camino=inic(mapi)
                         # llamar al A*
                         coste=aEstrella(mapi, origen, destino, camino)
-                        # coste = obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar)
-                        # print(mapaParaMostrar)
-                        # coste = coste - 1 # cambiar
                         if coste==-1:
                             tkinter.messagebox.showwarning(title='Error', message='No existe un camino entre origen y destino')                     
                         else:
