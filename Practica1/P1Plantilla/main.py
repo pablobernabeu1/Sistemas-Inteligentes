@@ -4,7 +4,7 @@ import tkinter
 from casilla import *
 from mapa import *
 from pygame.locals import *
-from vecinos import *
+from funciones import *
 
 
 MARGEN=5
@@ -125,9 +125,9 @@ def main():
                         destino=casi                        
                         camino=inic(mapi)
                         # llamar al A*
-                        #coste=aEstrella(mapi, origen, destino, camino)
-                        coste = obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar)
-                        print(mapaParaMostrar)
+                        coste=aEstrella(mapi, origen, destino, camino)
+                        # coste = obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar)
+                        # print(mapaParaMostrar)
                         # coste = coste - 1 # cambiar
                         if coste==-1:
                             tkinter.messagebox.showwarning(title='Error', message='No existe un camino entre origen y destino')                     
