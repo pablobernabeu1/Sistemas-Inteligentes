@@ -3,6 +3,8 @@ from casilla import *
 from nodo import *
 import math
 
+# Variable auxiliar para contar los vecinos visitados
+cont = 0
 
 # Funciones auxiliares
 
@@ -15,13 +17,8 @@ def esOrigen(i, j, origen): # Esta función te dice si un punto (i, j) es el ori
 
 
 ####################### FUNCIONES PARA RELLENAR LA MATRIZ #######################################
-def rellenarDeUnos(mapi, mapaParaMostrar):  # Esta función rellena la matriz que se muestra por la terminal de -1s.
-    for i in range(0, mapi.getAlto()):
-        for j in range(0, mapi.getAncho()):
-            mapaParaMostrar[i][j] = -1
-
-
 def mostrarElMapa(mapaParaMostrar, mapi):
+    print("\n")
     for i in range(mapi.getAlto()):
         cadena = ""
         for j in range(mapi.getAncho()):
@@ -31,10 +28,15 @@ def mostrarElMapa(mapaParaMostrar, mapi):
         print(cadena)
 
 
+def rellenarDeUnos(mapi, mapaParaMostrar):  # Esta función rellena la matriz que se muestra por la terminal de -1s.
+    for i in range(0, mapi.getAlto()):
+        for j in range(0, mapi.getAncho()):
+            mapaParaMostrar[i][j] = -1
+
+"""
 def rellenarMapa(mapi, origen, destino, camino, mapaParaMostrar): # Funcion para rellenar la matriz que se muestra por la terminal
-    cont = 0
     rellenarDeUnos(mapi, mapaParaMostrar)
-    
+    global cont
     for i in range(origen.getFila() - 1, origen.getFila() + 2): # Recorremos las filas adyacentes al origen.
         for j in range(origen.getCol() - 1, origen.getCol() + 2): # Recorremos las columnas adyacentes al origen.
             cas = Casilla(i, j)
@@ -46,13 +48,14 @@ def rellenarMapa(mapi, origen, destino, camino, mapaParaMostrar): # Funcion para
                     
             elif esOrigen(i, j, origen): # Si la casilla es el origen marcamos en el mapa a mostrar por terminal lo dicho.
                 mapaParaMostrar[i][j] = 'O'
+"""
 ######################################################################################################################################
 
 
-def obtenerVecinos(mapi, origen, destino, camino): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
+def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
     distancia = 1000 # Distancia entre el mejor vecino y el destino.
     listaFront = []
-    
+    global cont
     for i in range(origen.getFila() - 1, origen.getFila() + 2): # Recorremos las filas adyacentes al origen.
         for j in range(origen.getCol() - 1, origen.getCol() + 2): # Recorremos las columnas adyacentes al origen.
             cas = Casilla(i, j) # Creamos un objeto Casilla con los puntos actuales.
@@ -60,34 +63,16 @@ def obtenerVecinos(mapi, origen, destino, camino): # Esta función rellena bien 
             if bueno(mapi, cas) and esOrigen(i, j, origen) == False: # Si el punto no es una pared y no es el origen.
                 nodo = Nodo(cas, origen, destino) # Creación de un nodo.
                 listaFront.append(nodo)
+                cont += 1
+                mapaParaMostrar[i][j] = cont
                 
-                distanciaAux = abs(destino.getFila() - i) + abs(destino.getCol() - j) # Calculamos la distancia de Manhattan de un vecino al destino.
-                camino[i][j] = 'X'
-                if distanciaAux <= distancia: # Si la nueva distancia es mayor que la anterior actualizamos el mejor punto.
-                    distancia = distanciaAux # Actualizamos la nueva mejor distancia
-                    filAux = i # Almacenamos la fila del mejor vecino.
-                    colAux = j # Almacenamos la columna del mejor vecino.
+                # distanciaAux = abs(destino.getFila() - i) + abs(destino.getCol() - j) # Calculamos la distancia de Manhattan de un vecino al destino.
                     
                 
     mapi.origen = destino # Cambiamos en que casilla se encuentra actualmente el cerdito.
     # camino[filAux][colAux] = 'X' # Marcamos en la matriz 'camino' el mejor vecino. 
             
     return listaFront
-
-"""
-def filtrarHijosEnListaInterior(listaInterior, hijos):
-    listaResultado = []
-    for x in listaInterior:
-        for y in hijos:
-            if x.getCasilla().getFila() == y.getCasilla().getFila() and x.getCasilla().getCol() == y.getCasilla().getCol():
-                print("")
-            else:
-                listaResultado.append(y)
-                for z in listaResultado:
-                    
-                        
-    return listaResultado
-"""
 
 
 def filtrarHijosEnListaInterior(listaInterior, hijos):
@@ -109,15 +94,18 @@ def calcularG(casillaActual, casillaAnterior):
 
 
 def aEstrella(mapi, origen, destino, camino):
+    global cont
+    cont = 0
     mapaParaMostrar = inic(mapi)
-    rellenarMapa(mapi, origen, destino, camino, mapaParaMostrar)
+    rellenarDeUnos(mapi, mapaParaMostrar)
+    
     nodoOrigen = Nodo(origen, origen, destino)
     nodoOrigen.setG(0)
     
     
     listaInterior = []
-    listaInterior.append(nodoOrigen)
-    listaFrontera = obtenerVecinos(mapi, origen, destino, camino)
+    listaFrontera = []
+    listaFrontera.append(nodoOrigen)
     
     
     while listaFrontera != []:
@@ -132,14 +120,25 @@ def aEstrella(mapi, origen, destino, camino):
         
         n = mejorNodo
         if n.esMeta(destino):
-            print("IMPRIMIR EL CAMINO RECORRIDO HASTA LLEGAR A LA META")
-            return 1
+            listaCamino = []
+            listaCamino.append(n)
+            
+            hijo = n.getPadre()
+            while hijo != nodoOrigen:
+                listaCamino.append(hijo)
+                hijo = hijo.getPadre()
+                
+            for c in listaCamino:
+                camino[c.getCasilla().getFila()][c.getCasilla().getCol()] = 'X'
+                
+            mostrarElMapa(mapaParaMostrar, mapi)
+            return n.getG()
             
         else:
-            listaFrontera.pop(0)
+            listaFrontera.remove(n)
             listaInterior.append(n)
             
-            vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino)
+            vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino, mapaParaMostrar)
             hijosNoEnListaInterior = filtrarHijosEnListaInterior(listaInterior, vecinos)
             for m in hijosNoEnListaInterior:
                 gPrima = n.getG() + calcularG(n.getCasilla(), m.getCasilla())
@@ -164,7 +163,7 @@ def aEstrella(mapi, origen, destino, camino):
      
     mostrarElMapa(mapaParaMostrar, mapi)
     
-    return 1
+    return None
 
 
 

@@ -15,7 +15,6 @@ class Nodo():
     def __eq__(self, nodo2):
         return (self.casilla.getFila() == nodo2.getCasilla().getFila() and self.casilla.getCol() == nodo2.getCasilla().getCol())
 
-
     def getG(self):
         return self.g
     
@@ -28,6 +27,9 @@ class Nodo():
     def getCasilla(self):
         return self.casilla
     
+    def getPadre(self):
+        return self.padre
+    
     def setG(self, newG):
         self.g = newG
         self.f = self.g + self.h
@@ -37,3 +39,4 @@ class Nodo():
     
     def setPadre(self, p):
         self.padre = p
+        
