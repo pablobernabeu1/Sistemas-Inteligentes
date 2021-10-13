@@ -7,12 +7,25 @@ import math
 cont = 0
 
 # Funciones auxiliares
-
-            
-            
-            
 def esOrigen(i, j, origen): # Esta función te dice si un punto (i, j) es el origen o no.
     return (i == origen.getFila() and j == origen.getCol())
+
+
+def filtrarHijosEnListaInterior(listaInterior, hijos):
+    listaResultado = []
+    for x in hijos:
+        if x not in listaInterior:
+            listaResultado.append(x)
+                        
+    return listaResultado
+
+
+
+def calcularG(casillaActual, casillaAnterior):
+    if casillaActual.getFila() != casillaAnterior.getFila() and casillaActual.getCol() != casillaAnterior.getCol():
+        return 1.5
+    else:
+        return 1
 
 
 
@@ -32,26 +45,9 @@ def rellenarDeUnos(mapi, mapaParaMostrar):  # Esta función rellena la matriz qu
     for i in range(0, mapi.getAlto()):
         for j in range(0, mapi.getAncho()):
             mapaParaMostrar[i][j] = -1
-
-"""
-def rellenarMapa(mapi, origen, destino, camino, mapaParaMostrar): # Funcion para rellenar la matriz que se muestra por la terminal
-    rellenarDeUnos(mapi, mapaParaMostrar)
-    global cont
-    for i in range(origen.getFila() - 1, origen.getFila() + 2): # Recorremos las filas adyacentes al origen.
-        for j in range(origen.getCol() - 1, origen.getCol() + 2): # Recorremos las columnas adyacentes al origen.
-            cas = Casilla(i, j)
             
-            if bueno(mapi, cas) and esOrigen(i, j, origen) == False:
-                cont += 1
-                mapaParaMostrar[i][j] = cont
-                distanciaAux = abs(destino.getFila() - i) + abs(destino.getCol() - j)
-                    
-            elif esOrigen(i, j, origen): # Si la casilla es el origen marcamos en el mapa a mostrar por terminal lo dicho.
-                mapaParaMostrar[i][j] = 'O'
-"""
+
 ######################################################################################################################################
-
-
 def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
     distancia = 1000 # Distancia entre el mejor vecino y el destino.
     listaFront = []
@@ -75,24 +71,10 @@ def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta funci
     return listaFront
 
 
-def filtrarHijosEnListaInterior(listaInterior, hijos):
-    listaResultado = []
-    for x in hijos:
-        if x not in listaInterior:
-            listaResultado.append(x)
-                        
-    return listaResultado
 
 
 
-def calcularG(casillaActual, casillaAnterior):
-    if casillaActual.getFila() != casillaAnterior.getFila() and casillaActual.getCol() != casillaAnterior.getCol():
-        return 1.5
-    else:
-        return 1
-
-
-
+# Función principal a programar
 def aEstrella(mapi, origen, destino, camino):
     global cont
     cont = 0
@@ -111,11 +93,11 @@ def aEstrella(mapi, origen, destino, camino):
     while listaFrontera != []:
         
         # Coger el nodo con la 'g' más pequeña.
-        gMasPequeña = listaFrontera[0].getG()
+        fMasPequeña = listaFrontera[0].getG()
         mejorNodo = listaFrontera[0]
         for x in listaFrontera:
-            if x.getG() < gMasPequeña:
-                gMasPequeña = x.getG()
+            if x.getF() < fMasPequeña:
+                fMasPequeña = x.getF()
                 mejorNodo = x
         
         n = mejorNodo
@@ -152,6 +134,8 @@ def aEstrella(mapi, origen, destino, camino):
                 if found == False:
                     # Almacenar en el nodo m sus valores de f, g, etc...
                     m.setG(gPrima)
+                    m.setH(destino)
+                    m.setF(m.getG() + m.getH())
                     m.setPadre(n)
                     listaFrontera.append(m)
                     
@@ -159,6 +143,7 @@ def aEstrella(mapi, origen, destino, camino):
                     m.setPadre(n)
                     # recalcular f y g del nodo m
                     m.setG(gPrima)
+                    m.setF(m.getG() + m.getH())
         
      
     mostrarElMapa(mapaParaMostrar, mapi)

@@ -3,11 +3,18 @@ def calcularG(casillaActual, casillaAnterior):
         return 1.5
     else:
         return 1
+    
+
+def distanciaManhattan(cas1, cas2):
+    return abs(cas2.getFila() - cas1.getFila()) + abs(cas2.getCol() - cas1.getCol())
+    
+    
 
 class Nodo():
     def __init__(self, cas, casAnterior, destino):
         self.casilla = cas
         self.g = calcularG(cas, casAnterior)
+        # self.h = distanciaManhattan(cas, destino)
         self.h = 0
         self.f = self.g + self.h
         self.padre = None
@@ -32,11 +39,18 @@ class Nodo():
     
     def setG(self, newG):
         self.g = newG
-        self.f = self.g + self.h
+        
+    def setH(self, destino):
+        self.h = distanciaManhattan(self.casilla, destino)
+        
+    def setF(self, newF):
+        self.f = newF
+        
+    def setPadre(self, p):
+        self.padre = p
     
     def esMeta(self, destino):
         return (self.casilla.getFila() == destino.getFila() and self.casilla.getCol() == destino.getCol())
     
-    def setPadre(self, p):
-        self.padre = p
+    
         
