@@ -14,8 +14,8 @@ class Nodo():
     def __init__(self, cas, casAnterior, destino):
         self.casilla = cas
         self.g = calcularG(cas, casAnterior)
-        # self.h = distanciaManhattan(cas, destino)
-        self.h = 0
+        self.h = distanciaManhattan(cas, destino)
+        # self.h = 0
         self.f = self.g + self.h
         self.padre = None
         

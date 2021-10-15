@@ -35,7 +35,6 @@ def mostrarElMapa(mapaParaMostrar, mapi):
     for i in range(mapi.getAlto()):
         cadena = ""
         for j in range(mapi.getAncho()):
-            
             cadena = cadena + " " + str(mapaParaMostrar[i][j])
             
         print(cadena)
@@ -127,7 +126,7 @@ def aEstrella(mapi, origen, destino, camino):
                 
                 found = False
                 for x in listaFrontera:
-                    if x==m:
+                    if x == m:
                         found = True
                     
                 
