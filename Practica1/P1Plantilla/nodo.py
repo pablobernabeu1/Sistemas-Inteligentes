@@ -6,15 +6,14 @@ def calcularG(casillaActual, casillaAnterior):
     
 
 def distanciaManhattan(cas1, cas2):
-    return abs(cas2.getFila() - cas1.getFila()) + abs(cas2.getCol() - cas1.getCol())
-    
+    return abs(cas1.getFila() - cas2.getFila()) + abs(cas1.getCol() - cas2.getCol())
     
 
 class Nodo():
     def __init__(self, cas, casAnterior, destino):
         self.casilla = cas
         self.g = calcularG(cas, casAnterior)
-        self.h = distanciaManhattan(cas, destino)
+        self.h = distanciaManhattan(destino, cas)
         # self.h = 0
         self.f = self.g + self.h
         self.padre = None
@@ -41,7 +40,7 @@ class Nodo():
         self.g = newG
         
     def setH(self, destino):
-        self.h = distanciaManhattan(self.casilla, destino)
+        self.h = distanciaManhattan(destino, self.casilla)
         
     def setF(self, newF):
         self.f = newF

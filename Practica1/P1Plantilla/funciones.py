@@ -85,7 +85,7 @@ def aEstrella(mapi, origen, destino, camino):
     
     while listaFrontera != []:
         
-        # Coger el nodo con la 'g' más pequeña.
+        # Coger el nodo con la 'f' más pequeña.
         fMasPequeña = listaFrontera[0].getG()
         mejorNodo = listaFrontera[0]
         for x in listaFrontera:
@@ -131,6 +131,7 @@ def aEstrella(mapi, origen, destino, camino):
                     # Almacenar en el nodo m sus valores de f, g, etc...
                     m.setG(gPrima)
                     m.setH(destino)
+                    # m.h = 0
                     m.setF(m.getG() + m.getH())
                     m.setPadre(n)
                     listaFrontera.append(m)
