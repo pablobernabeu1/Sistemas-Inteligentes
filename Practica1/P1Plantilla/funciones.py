@@ -47,10 +47,9 @@ def rellenarDeUnos(mapi, mapaParaMostrar):  # Esta función rellena la matriz qu
             
 
 ######################################################################################################################################
-def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
+def obtenerVecinos(mapi, origen, destino, camino): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
     distancia = 1000 # Distancia entre el mejor vecino y el destino.
     listaFront = []
-    global cont
     for i in range(origen.getFila() - 1, origen.getFila() + 2): # Recorremos las filas adyacentes al origen.
         for j in range(origen.getCol() - 1, origen.getCol() + 2): # Recorremos las columnas adyacentes al origen.
             cas = Casilla(i, j) # Creamos un objeto Casilla con los puntos actuales.
@@ -58,10 +57,6 @@ def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta funci
             if bueno(mapi, cas) and esOrigen(i, j, origen) == False: # Si el punto no es una pared y no es el origen.
                 nodo = Nodo(cas, origen, destino) # Creación de un nodo.
                 listaFront.append(nodo)
-                cont += 1
-                mapaParaMostrar[i][j] = cont
-                
-                # distanciaAux = abs(destino.getFila() - i) + abs(destino.getCol() - j) # Calculamos la distancia de Manhattan de un vecino al destino.
                     
                 
     mapi.origen = destino # Cambiamos en que casilla se encuentra actualmente el cerdito.
@@ -87,7 +82,6 @@ def aEstrella(mapi, origen, destino, camino):
     listaInterior = []
     listaFrontera = []
     listaFrontera.append(nodoOrigen)
-    
     
     while listaFrontera != []:
         
@@ -119,7 +113,10 @@ def aEstrella(mapi, origen, destino, camino):
             listaFrontera.remove(n)
             listaInterior.append(n)
             
-            vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino, mapaParaMostrar)
+            mapaParaMostrar[n.getCasilla().getFila()][n.getCasilla().getCol()] = cont
+            cont += 1
+            
+            vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino)
             hijosNoEnListaInterior = filtrarHijosEnListaInterior(listaInterior, vecinos)
             for m in hijosNoEnListaInterior:
                 gPrima = n.getG() + calcularG(n.getCasilla(), m.getCasilla())
