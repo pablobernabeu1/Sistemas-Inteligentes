@@ -15,7 +15,8 @@ class Nodo():
     def __init__(self, cas, casAnterior, destino):
         self.casilla = cas
         self.g = calcularG(cas, casAnterior)
-        self.h = euclidean_distance(destino, cas)
+        self.h = 0
+        # self.h = euclidean_distance(destino, cas)
         self.f = self.g + self.h
         self.padre = None
         
@@ -39,10 +40,10 @@ class Nodo():
     
     def setG(self, newG):
         self.g = newG
-        self.f = self.g + self.h
         
     def setH(self, destino):
-        self.h = euclidean_distance(destino, self.casilla)
+        # self.h = euclidean_distance(destino, self.casilla)
+        self.h = 0
         
     def setF(self, newF):
         self.f = newF
