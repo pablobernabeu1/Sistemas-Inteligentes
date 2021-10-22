@@ -130,8 +130,8 @@ def aEstrella(mapi, origen, destino, camino):
                 if found == False:
                     # Almacenar en el nodo m sus valores de f, g, etc...
                     m.setG(gPrima)
-                    m.setH(destino)
-                    # m.h = 0
+                    # m.setH(destino)
+                    m.h = 0
                     m.setF(m.getG() + m.getH())
                     m.setPadre(n)
                     listaFrontera.append(m)
