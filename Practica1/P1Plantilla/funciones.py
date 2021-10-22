@@ -54,8 +54,11 @@ def rellenarMapa(mapi, origen, destino, camino, mapaParaMostrar): # Funcion para
             cas = Casilla(i, j)
             
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> parent of 26ff8c2 (Cambiando el mapaParaMostrar)
             if bueno(mapi, cas) and esOrigen(i, j, origen) == False:
                 cont += 1
                 mapaParaMostrar[i][j] = cont
@@ -64,7 +67,7 @@ def rellenarMapa(mapi, origen, destino, camino, mapaParaMostrar): # Funcion para
             elif esOrigen(i, j, origen): # Si la casilla es el origen marcamos en el mapa a mostrar por terminal lo dicho.
                 mapaParaMostrar[i][j] = 'O'
 """
->>>>>>> parent of 26ff8c2 (Cambiando el mapaParaMostrar)
+
 ######################################################################################################################################
 
 
@@ -79,13 +82,11 @@ def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta funci
             if bueno(mapi, cas) and esOrigen(i, j, origen) == False: # Si el punto no es una pared y no es el origen.
                 nodo = Nodo(cas, origen, destino) # Creación de un nodo.
                 listaFront.append(nodo)
-<<<<<<< HEAD
-=======
                 cont += 1
                 mapaParaMostrar[i][j] = cont
                 
                 # distanciaAux = abs(destino.getFila() - i) + abs(destino.getCol() - j) # Calculamos la distancia de Manhattan de un vecino al destino.
->>>>>>> parent of 26ff8c2 (Cambiando el mapaParaMostrar)
+
                     
                 
     mapi.origen = destino # Cambiamos en que casilla se encuentra actualmente el cerdito.
@@ -142,14 +143,10 @@ def aEstrella(mapi, origen, destino, camino):
             listaFrontera.remove(n)
             listaInterior.append(n)
             
-<<<<<<< HEAD
             mapaParaMostrar[n.getCasilla().getFila()][n.getCasilla().getCol()] = cont
             cont += 1
             
             vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino)
-=======
-            vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino, mapaParaMostrar)
->>>>>>> parent of 26ff8c2 (Cambiando el mapaParaMostrar)
             hijosNoEnListaInterior = filtrarHijosEnListaInterior(listaInterior, vecinos)
             for m in hijosNoEnListaInterior:
                 gPrima = n.getG() + calcularG(n.getCasilla(), m.getCasilla())
