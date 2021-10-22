@@ -52,12 +52,17 @@ class Nodo():
     
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     
         
 =======
     def setPadre(self, p):
         self.padre = p
 >>>>>>> parent of cedc903 (Terminando el trabajo para la sesión 3.)
+=======
+    
+        
+>>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
 =======
     
         

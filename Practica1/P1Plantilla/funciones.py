@@ -49,6 +49,7 @@ def rellenarDeUnos(mapi, mapaParaMostrar):  # Esta función rellena la matriz qu
         for j in range(0, mapi.getAncho()):
             mapaParaMostrar[i][j] = -1
 <<<<<<< HEAD
+<<<<<<< HEAD
             
 
 ######################################################################################################################################
@@ -82,10 +83,17 @@ def obtenerVecinos(mapi, origen, destino, camino): # Esta función rellena bien 
 =======
             
 
+=======
+            
+
+>>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
 ######################################################################################################################################
 def obtenerVecinos(mapi, origen, destino, camino): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
     distancia = 1000 # Distancia entre el mejor vecino y el destino.
     listaFront = []
+<<<<<<< HEAD
+>>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
+=======
 >>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
     for i in range(origen.getFila() - 1, origen.getFila() + 2): # Recorremos las filas adyacentes al origen.
         for j in range(origen.getCol() - 1, origen.getCol() + 2): # Recorremos las columnas adyacentes al origen.
@@ -94,6 +102,7 @@ def obtenerVecinos(mapi, origen, destino, camino): # Esta función rellena bien 
             if bueno(mapi, cas) and esOrigen(i, j, origen) == False: # Si el punto no es una pared y no es el origen.
                 nodo = Nodo(cas, origen, destino) # Creación de un nodo.
                 listaFront.append(nodo)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 =======
@@ -107,6 +116,8 @@ def obtenerVecinos(mapi, origen, destino, camino): # Esta función rellena bien 
 >>>>>>> parent of cedc903 (Terminando el trabajo para la sesión 3.)
 =======
 >>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
+=======
+>>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
                     
                 
     mapi.origen = destino # Cambiamos en que casilla se encuentra actualmente el cerdito.
@@ -114,6 +125,7 @@ def obtenerVecinos(mapi, origen, destino, camino): # Esta función rellena bien 
             
     return listaFront
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 """
 def filtrarHijosEnListaInterior(listaInterior, hijos):
@@ -130,6 +142,8 @@ def filtrarHijosEnListaInterior(listaInterior, hijos):
     return listaResultado
 """
 
+=======
+>>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
 =======
 >>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
 
@@ -151,6 +165,9 @@ def aEstrella(mapi, origen, destino, camino):
 =======
     listaFrontera = []
     listaFrontera.append(nodoOrigen)
+<<<<<<< HEAD
+>>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
+=======
 >>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
     
     while listaFrontera != []:
@@ -174,11 +191,17 @@ def aEstrella(mapi, origen, destino, camino):
             
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
             mapaParaMostrar[n.getCasilla().getFila()][n.getCasilla().getCol()] = cont
             cont += 1
             
 =======
 >>>>>>> parent of cedc903 (Terminando el trabajo para la sesión 3.)
+=======
+            mapaParaMostrar[n.getCasilla().getFila()][n.getCasilla().getCol()] = cont
+            cont += 1
+            
+>>>>>>> 656bbae7c1340b9245cbd865c31adb2c56e99c6a
 =======
             mapaParaMostrar[n.getCasilla().getFila()][n.getCasilla().getCol()] = cont
             cont += 1
