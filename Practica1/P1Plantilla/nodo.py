@@ -15,7 +15,7 @@ class Nodo():
         self.g = calcularG(cas, casAnterior)
         # self.h = distanciaManhattan(destino, cas)
         self.h = 0
-        self.f = self.g + self.h
+        # self.f = self.g
         self.padre = None
         
     def __eq__(self, nodo2):
@@ -38,6 +38,7 @@ class Nodo():
     
     def setG(self, newG):
         self.g = newG
+        self.f = self.g + self.h
         
     def setH(self, destino):
         # self.h = distanciaManhattan(destino, self.casilla)
@@ -52,3 +53,5 @@ class Nodo():
     def esMeta(self, destino):
         return (self.casilla.getFila() == destino.getFila() and self.casilla.getCol() == destino.getCol())
     
+    
+        
