@@ -3,9 +3,6 @@ from casilla import *
 from nodo import *
 import math
 
-# Variable auxiliar para contar los vecinos visitados
-cont = 0
-
 # Funciones auxiliares
 def esOrigen(i, j, origen): # Esta función te dice si un punto (i, j) es el origen o no.
     return (i == origen.getFila() and j == origen.getCol())
@@ -48,7 +45,7 @@ def rellenarDeUnos(mapi, mapaParaMostrar):  # Esta función rellena la matriz qu
 
 
 ############################################ Función para obtener a los vecinos de un nodo #########################################
-def obtenerVecinos(mapi, origen, destino, camino, newG): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
+def obtenerVecinos(mapi, origen, destino, camino, lastG): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
     distancia = 1000 # Distancia entre el mejor vecino y el destino.
     listaFront = []
     for i in range(origen.getFila() - 1, origen.getFila() + 2): # Recorremos las filas adyacentes al origen.
@@ -56,7 +53,7 @@ def obtenerVecinos(mapi, origen, destino, camino, newG): # Esta función rellena
             cas = Casilla(i, j) # Creamos un objeto Casilla con los puntos actuales.
             
             if bueno(mapi, cas) and esOrigen(i, j, origen) == False: # Si el punto no es una pared y no es el origen.
-                nodo = Nodo(cas, origen, destino, newG) # Creación de un nodo.
+                nodo = Nodo(cas, origen, destino, lastG) # Creación de un nodo.
                 listaFront.append(nodo)
                     
                 
@@ -69,7 +66,6 @@ def obtenerVecinos(mapi, origen, destino, camino, newG): # Esta función rellena
 
 # Función principal a programar
 def aEstrella(mapi, origen, destino, camino):
-    global cont
     cont = 0
     nodosExpandidos = 0
     mapaParaMostrar = inic(mapi)
@@ -127,23 +123,23 @@ def aEstrella(mapi, origen, destino, camino):
                 for x in listaFrontera:
                     if x == m:
                         found = True
+                        m = x
+                        break
                     
                 
                 if found == False:
                     # Almacenar en el nodo m sus valores de f, g, etc...
                     m.setG(gPrima)
                     m.setH(destino)
-                    # m.setF(m.getG() + m.getH())
-                    m.f = m.getG() + m.getH()
+                    m.setF(m.getG() + m.getH())
                     m.setPadre(n)
                     listaFrontera.append(m)
                     
-                elif gPrima < m.getG():
+                elif gPrima <= m.getG():
                     m.setPadre(n)
                     # recalcular f y g del nodo m
                     m.setG(gPrima)
-                    # m.setF(m.getG() + m.getH())
-                    m.f = m.getG() + m.getH()
+                    m.setF(m.getG() + m.getH())
         
      
     mostrarElMapa(mapaParaMostrar, mapi)

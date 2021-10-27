@@ -1,4 +1,0 @@
-h = 0 -> Nodos expandidos: 108
-Manhattan -> Nodos expandidos: 11
-Euclidean -> Nodos expandidos: 17
-(Para el camino desde el origen hasta la esquina arriba derecha)

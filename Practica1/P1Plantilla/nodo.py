@@ -1,6 +1,6 @@
 import math
 from scipy.spatial import distance
-# distance.chebyshev([1, 0, 0], [0, 1, 0])
+# distance.chebyshev([cas1.getFila(), cas1.getCol()], [cas2.getFila(), cas2.getCol()])
 
 
 def calcularG(casillaActual, casillaAnterior):
@@ -16,6 +16,7 @@ def distanciaManhattan(cas1, cas2):
 
 def euclidean_distance(cas1, cas2):
     return math.sqrt((cas2.getFila() - cas1.getFila())**2 + (cas2.getCol() - cas1.getCol())**2)
+    # return distance.euclidean([cas1.getFila(), cas1.getCol()], [cas2.getFila(), cas2.getCol()])
 
 
 def pitagoras(cas1, cas2):
@@ -23,23 +24,28 @@ def pitagoras(cas1, cas2):
 
 
 def chebyshev(cas1, cas2):
+    # return distance.chebyshev([cas1.getFila(), cas1.getCol()], [cas2.getFila(), cas2.getCol()])
     result = 0
     for i in range(2):
-        d = abs(cas1[i] - cas2[i])
-        result = max(result, d)
-        
+        if i == 0:
+            d = abs(cas1.getFila() - cas2.getFila())
+            result = max(result, d)
+        else:
+            d = abs(cas1.getCol() - cas2.getCol())
+            result = max(result, d)
+            
     return result
 
 
 class Nodo():
-    def __init__(self, cas, casAnterior, destino, newG):
+    def __init__(self, cas, casAnterior, destino, lastG):
         self.casilla = cas
-        self.g = newG + calcularG(cas, casAnterior)
-        # self.h = 0
+        self.g = lastG + calcularG(cas, casAnterior)
+        self.h = 0
         # self.h = distanciaManhattan(destino, cas)
         # self.h = pitagoras(self.casilla, destino)
         # self.h = chebyshev(self.casilla, destino)
-        self.h = euclidean_distance(self.casilla, destino)
+        # self.h = euclidean_distance(self.casilla, destino)
         self.f = self.g + self.h
         self.padre = None
         
@@ -65,11 +71,11 @@ class Nodo():
         self.g = newG
         
     def setH(self, destino):
-        # self.h = 0
+        self.h = 0
         # self.h = distanciaManhattan(destino, self.casilla)
         # self.h = pitagoras(self.casilla, destino)
         # self.h = chebyshev(self.casilla, destino)
-        self.h = euclidean_distance(self.casilla, destino)
+        # self.h = euclidean_distance(self.casilla, destino)
         
     def setF(self, newF):
         self.f = newF
