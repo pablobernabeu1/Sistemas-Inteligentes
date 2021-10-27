@@ -40,12 +40,19 @@ def rellenarDeUnos(mapi, mapaParaMostrar):  # Esta función rellena la matriz qu
     for i in range(0, mapi.getAlto()):
         for j in range(0, mapi.getAncho()):
             mapaParaMostrar[i][j] = -1
+<<<<<<< HEAD
 
 ######################################################################################################################################
 
 
 ############################################ Función para obtener a los vecinos de un nodo #########################################
 def obtenerVecinos(mapi, origen, destino, camino, lastG): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
+=======
+            
+
+######################################################################################################################################
+def obtenerVecinos(mapi, origen, destino, camino): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
+>>>>>>> d63872cab7e694f0a29e635d24af781c21d62e4e
     distancia = 1000 # Distancia entre el mejor vecino y el destino.
     listaFront = []
     for i in range(origen.getFila() - 1, origen.getFila() + 2): # Recorremos las filas adyacentes al origen.
@@ -57,7 +64,12 @@ def obtenerVecinos(mapi, origen, destino, camino, lastG): # Esta función rellen
                 listaFront.append(nodo)
                     
                 
+<<<<<<< HEAD
     mapi.origen = destino # Cambiamos en que casilla se encuentra actualmente el cerdito. 
+=======
+    mapi.origen = destino # Cambiamos en que casilla se encuentra actualmente el cerdito.
+    # camino[filAux][colAux] = 'X' # Marcamos en la matriz 'camino' el mejor vecino. 
+>>>>>>> d63872cab7e694f0a29e635d24af781c21d62e4e
             
     return listaFront
 
@@ -82,11 +94,11 @@ def aEstrella(mapi, origen, destino, camino):
     while listaFrontera != []:
         
         # Coger el nodo con la 'f' más pequeña.
-        fMasPequeña = listaFrontera[0].getF()
+        fMasPequeña = listaFrontera[0].getG()
         mejorNodo = listaFrontera[0]
         for x in listaFrontera:
-            if x.getF() < fMasPequeña:
-                fMasPequeña = x.getF()
+            if x.getG() < fMasPequeña:
+                fMasPequeña = x.getG()
                 mejorNodo = x
         
         n = mejorNodo
@@ -113,7 +125,11 @@ def aEstrella(mapi, origen, destino, camino):
             cont += 1
             mapaParaMostrar[n.getCasilla().getFila()][n.getCasilla().getCol()] = cont
             
+<<<<<<< HEAD
             vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino, n.getG())
+=======
+            vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino)
+>>>>>>> d63872cab7e694f0a29e635d24af781c21d62e4e
             hijosNoEnListaInterior = filtrarHijosEnListaInterior(listaInterior, vecinos)
             nodosExpandidos += 1
             for m in hijosNoEnListaInterior:
@@ -130,8 +146,9 @@ def aEstrella(mapi, origen, destino, camino):
                 if found == False:
                     # Almacenar en el nodo m sus valores de f, g, etc...
                     m.setG(gPrima)
-                    m.setH(destino)
-                    m.setF(m.getG() + m.getH())
+                    # m.setH(destino)
+                    # m.h = 0
+                    # m.setF(m.getG() + m.getH())
                     m.setPadre(n)
                     listaFrontera.append(m)
                     
@@ -139,7 +156,7 @@ def aEstrella(mapi, origen, destino, camino):
                     m.setPadre(n)
                     # recalcular f y g del nodo m
                     m.setG(gPrima)
-                    m.setF(m.getG() + m.getH())
+                    # m.setF(m.getG() + m.getH())
         
      
     mostrarElMapa(mapaParaMostrar, mapi)
