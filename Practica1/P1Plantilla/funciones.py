@@ -20,16 +20,15 @@ def filtrarHijosEnListaInterior(listaInterior, hijos):
     return listaResultado
 
 
-
 def calcularG(casillaActual, casillaAnterior):
     if casillaActual.getFila() != casillaAnterior.getFila() and casillaActual.getCol() != casillaAnterior.getCol():
         return 1.5
     else:
         return 1
+####################################################################################################################
 
 
-
-####################### FUNCIONES PARA RELLENAR LA MATRIZ #######################################
+####################### FUNCIONES PARA LA MATRIZ #######################################
 def mostrarElMapa(mapaParaMostrar, mapi):
     print("\n")
     for i in range(mapi.getAlto()):
@@ -45,63 +44,38 @@ def rellenarDeUnos(mapi, mapaParaMostrar):  # Esta función rellena la matriz qu
         for j in range(0, mapi.getAncho()):
             mapaParaMostrar[i][j] = -1
 
-"""
-def rellenarMapa(mapi, origen, destino, camino, mapaParaMostrar): # Funcion para rellenar la matriz que se muestra por la terminal
-    rellenarDeUnos(mapi, mapaParaMostrar)
-    global cont
-    for i in range(origen.getFila() - 1, origen.getFila() + 2): # Recorremos las filas adyacentes al origen.
-        for j in range(origen.getCol() - 1, origen.getCol() + 2): # Recorremos las columnas adyacentes al origen.
-            cas = Casilla(i, j)
-            
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
-=======
->>>>>>> parent of 26ff8c2 (Cambiando el mapaParaMostrar)
-            if bueno(mapi, cas) and esOrigen(i, j, origen) == False:
-                cont += 1
-                mapaParaMostrar[i][j] = cont
-                distanciaAux = abs(destino.getFila() - i) + abs(destino.getCol() - j)
-                    
-            elif esOrigen(i, j, origen): # Si la casilla es el origen marcamos en el mapa a mostrar por terminal lo dicho.
-                mapaParaMostrar[i][j] = 'O'
-"""
-
 ######################################################################################################################################
 
 
-def obtenerVecinos(mapi, origen, destino, camino, mapaParaMostrar): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
+############################################ Función para obtener a los vecinos de un nodo #########################################
+def obtenerVecinos(mapi, origen, destino, camino, newG): # Esta función rellena bien el mapa para mostrar por la terminal y calcula el vecino más cercano al destino.
     distancia = 1000 # Distancia entre el mejor vecino y el destino.
     listaFront = []
-    global cont
     for i in range(origen.getFila() - 1, origen.getFila() + 2): # Recorremos las filas adyacentes al origen.
         for j in range(origen.getCol() - 1, origen.getCol() + 2): # Recorremos las columnas adyacentes al origen.
             cas = Casilla(i, j) # Creamos un objeto Casilla con los puntos actuales.
             
             if bueno(mapi, cas) and esOrigen(i, j, origen) == False: # Si el punto no es una pared y no es el origen.
-                nodo = Nodo(cas, origen, destino) # Creación de un nodo.
+                nodo = Nodo(cas, origen, destino, newG) # Creación de un nodo.
                 listaFront.append(nodo)
+                    
                 
-                # distanciaAux = abs(destino.getFila() - i) + abs(destino.getCol() - j) # Calculamos la distancia de Manhattan de un vecino al destino.      
-                
-    mapi.origen = destino # Cambiamos en que casilla se encuentra actualmente el cerdito.
-    # camino[filAux][colAux] = 'X' # Marcamos en la matriz 'camino' el mejor vecino. 
+    mapi.origen = destino # Cambiamos en que casilla se encuentra actualmente el cerdito. 
             
     return listaFront
 
-
-
+######################################################################################################################################
 
 
 # Función principal a programar
 def aEstrella(mapi, origen, destino, camino):
     global cont
     cont = 0
+    nodosExpandidos = 0
     mapaParaMostrar = inic(mapi)
     rellenarDeUnos(mapi, mapaParaMostrar)
     
-    nodoOrigen = Nodo(origen, origen, destino)
+    nodoOrigen = Nodo(origen, origen, destino, 0)
     nodoOrigen.setG(0)
     
     
@@ -121,6 +95,7 @@ def aEstrella(mapi, origen, destino, camino):
         
         n = mejorNodo
         if n.esMeta(destino):
+            print("\nNodos expandidos:" + str(nodosExpandidos))
             listaCamino = []
             listaCamino.append(n)
             
@@ -139,11 +114,12 @@ def aEstrella(mapi, origen, destino, camino):
             listaFrontera.remove(n)
             listaInterior.append(n)
             
-            mapaParaMostrar[n.getCasilla().getFila()][n.getCasilla().getCol()] = cont
             cont += 1
+            mapaParaMostrar[n.getCasilla().getFila()][n.getCasilla().getCol()] = cont
             
-            vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino, mapaParaMostrar)
+            vecinos = obtenerVecinos(mapi, n.getCasilla(), destino, camino, n.getG())
             hijosNoEnListaInterior = filtrarHijosEnListaInterior(listaInterior, vecinos)
+            nodosExpandidos += 1
             for m in hijosNoEnListaInterior:
                 gPrima = n.getG() + calcularG(n.getCasilla(), m.getCasilla())
                 
@@ -157,7 +133,8 @@ def aEstrella(mapi, origen, destino, camino):
                     # Almacenar en el nodo m sus valores de f, g, etc...
                     m.setG(gPrima)
                     m.setH(destino)
-                    m.setF(m.getG() + m.getH())
+                    # m.setF(m.getG() + m.getH())
+                    m.f = m.getG() + m.getH()
                     m.setPadre(n)
                     listaFrontera.append(m)
                     
@@ -165,9 +142,17 @@ def aEstrella(mapi, origen, destino, camino):
                     m.setPadre(n)
                     # recalcular f y g del nodo m
                     m.setG(gPrima)
-                    m.setF(m.getG() + m.getH())
+                    # m.setF(m.getG() + m.getH())
+                    m.f = m.getG() + m.getH()
         
      
     mostrarElMapa(mapaParaMostrar, mapi)
+    print("\nNodos expandidos:" + str(nodosExpandidos))
     
     return None
+
+
+
+
+
+
