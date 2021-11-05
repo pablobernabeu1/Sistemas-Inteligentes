@@ -41,9 +41,9 @@ class Nodo():
     def __init__(self, cas, casAnterior, destino, lastG):
         self.casilla = cas
         self.g = lastG + calcularG(cas, casAnterior)
-        self.h = 0
+        # self.h = 0
         # self.h = distanciaManhattan(destino, cas)
-        # self.h = euclidean_distance(self.casilla, destino)
+        self.h = euclidean_distance(self.casilla, destino)
         # self.h = pitagoras(self.casilla, destino)
         # self.h = chebyshev(self.casilla, destino)
         self.f = self.g + self.h
@@ -71,9 +71,9 @@ class Nodo():
         self.g = newG
         
     def setH(self, destino):
-        self.h = 0
+        # self.h = 0
         # self.h = distanciaManhattan(destino, self.casilla)
-        # self.h = euclidean_distance(self.casilla, destino)
+        self.h = euclidean_distance(self.casilla, destino)
         # self.h = pitagoras(self.casilla, destino)
         # self.h = chebyshev(self.casilla, destino)
         
