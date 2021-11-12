@@ -10,11 +10,11 @@ mnist_X = npzfile['x']
 mnist_Y = npzfile['y']
 
 # Mostrar una imagen y su etiqueta
-utils.mostrar_imagen(mnist_X[99])
-print(mnist_Y[99])
+utils.mostrar_imagen(mnist_X[0])
+print(mnist_Y[0])
 
 # Adaptar los conjuntos X e Y a AdaBoost
-(X, Y) = utils.adaptar_conjuntos(mnist_X, mnist_Y)
+(X, Y) = utils.adaptar_conjuntos(mnist_X, mnist_Y, 0) # Se le pasa el 0 porque por ahora solo se pide completar para el 0, posteriormente se generaran los demás.
 
 # Lanzar Adaboost
 T = A = 1
