@@ -10,7 +10,7 @@ def adaptar_conjuntos(mnist_X, mnist_Y, n):
     
     for i in range(len(mnist_X)):
         if mnist_Y[i] == n:
-            Y.append(1) # Si no funciona usar .append()
+            Y.append(1)
         else:
             Y.append(-1)
     

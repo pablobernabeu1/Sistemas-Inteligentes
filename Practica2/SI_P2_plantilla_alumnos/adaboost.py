@@ -12,9 +12,9 @@ def entrenar(X, Y, T, A):
     inicializarD(D)
     # print(D)
     
-    for t in range(10): # numero de clasificadores debiles a crear
+    for t in range(1): # numero de clasificadores debiles a crear
         clasificadores = []
-        for k in range(10): # numero de pruebas aleatorias
+        for k in range(1): # numero de pruebas aleatorias
             # Obtenemos un clasificador debil
             c_d = cd.generar_clasificador_debil(28*28)
             clasificadores.append(c_d)
