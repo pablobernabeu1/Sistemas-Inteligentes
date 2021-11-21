@@ -6,9 +6,9 @@ def mostrar_imagen(imagen):
     plt.show()
 
 def adaptar_conjuntos(mnist_X, mnist_Y, n):
-    Y = []
+    Y = list()
     
-    for i in range(len(mnist_X)):
+    for i in range(len(mnist_Y)):
         if mnist_Y[i] == n:
             Y.append(1)
         else:
