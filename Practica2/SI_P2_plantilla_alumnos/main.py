@@ -13,33 +13,29 @@ mnist_Y = npzfile['y']
 
 # Mostrar una imagen y su etiqueta
 # utils.mostrar_imagen(mnist_X[0])
+N = len(mnist_Y)
 
 # Adaptar los conjuntos X e Y a AdaBoost
 (X0, Y0) = utils.adaptar_conjuntos(mnist_X, mnist_Y, 0) # Se le pasa el 0 porque por ahora solo se pide completar para el 0, posteriormente se generaran los demás.
 
-# Veces a iterar el bucle exterior del algoritmo
-T = 1
-# Veces a iterar el bucle interior del algoritmo
-A = 1 
+# Veces a iterar el bucle exterior del algoritmo (clasificadores débiles que formarán el fuerte)
+T = 3
+# Veces a iterar el bucle interior del algoritmo (clasificadores débiles aleatorios generados para elegir el mejor)
+A = 3 
 
 # Obtenemos los mejores clasificadores débiles después de entrenar
 (h, alphas) = adaboost.entrenar(X0, Y0, T, A)
 
 # Obtenemos el clasificador fuerte
-hx = 0
-for i in range(T):
-    ht = 0
-    for x in range(len(Y0)):
-        ht += h[i].aplicar[x]
-    hx += alphas[i] * ht
+cont = 0
+for i in range(len(Y0)):
+    signo = cd.obtenerClasificadorFuerte((h, alphas), X0[i])
+    if (signo == 1 and Y0[i] == 1) or (signo == -1 and Y0[i] == -1):
+        cont += 1
 
-signo = math.copysign(1, hx)
+acierto = (cont * 100) / N
 
-
-
-
-
-
+print("El clasificador fuerte clasifica bien el " + str(acierto) + " de los números.")
 
 
 

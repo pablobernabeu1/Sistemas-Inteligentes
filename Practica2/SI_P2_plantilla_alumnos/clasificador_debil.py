@@ -1,5 +1,6 @@
 import random
 import Clasificador as clas
+import numpy as np
 
 # Función para obtener el pixel correspondiente de la imagen, la cual está almacenada como una matriz
 def obtenerPixel(pix):
@@ -27,22 +28,18 @@ def aplicar_clasificador_debil(clasificador, imagen):
     if clasificador.direccion == 0:
         # Si el umbral del clasificador cumple con el umbral de la imagen        
         if clasificador.umbral < valorImagen:
-            clasificador.aplicar.append(1)
-            return True
+            return 1
         
         else:
-            clasificador.aplicar.append(-1)
-            return False
+            return -1
     # Si la dirección del clasificador es >
     else:
         # Si el umbral del clasificador cumple con el umbral de la imagen
         if clasificador.umbral > valorImagen:
-            clasificador.aplicar.append(1)
-            return True
+            return 1
         
         else:
-            clasificador.aplicar.append(-1)
-            return False
+            return -1
         
 
 def obtener_error(clasificador, X, Y, D):
@@ -52,27 +49,40 @@ def obtener_error(clasificador, X, Y, D):
     y_d = list()
     for i in range(len(Y)):
         res = aplicar_clasificador_debil(clasificador, X[i])
-        if Y[i] == 1 and res == True:
+        if Y[i] == 1 and res == 1:
             y_d.append(True)
             result += 0
             
-        elif Y[i] == 1 and res == False:
+        elif Y[i] == 1 and res == -1:
             y_d.append(False)
             result += D[i]
             
-        elif Y[i] == -1 and res == True:
+        elif Y[i] == -1 and res == 1:
             y_d.append(False)
             result += D[i]
         
-        elif Y[i] == -1 and res == False:
+        elif Y[i] == -1 and res == -1:
             y_d.append(True)
             result += 0
 
-    return [result, y_d]
+    return result
 
 
 
-
-
+def obtenerClasificadorFuerte(classifier, imagen):
+    (h, alphas) = classifier
+    N = len(imagen)
+    
+    fuerte = []
+    for i in range(len(alphas)):
+        if i == 0:
+            fuerte = np.double(alphas[i] * aplicar_clasificador_debil(h[i], imagen))
+        
+        else:
+            fuerte = fuerte + np.double(alphas[i] * aplicar_clasificador_debil(h[i], imagen))
+            
+    signo = np.sign(fuerte)
+    
+    return signo
 
 
