@@ -2,18 +2,6 @@ import random
 import Clasificador as clas
 import numpy as np
 
-# Función para obtener el pixel correspondiente de la imagen, la cual está almacenada como una matriz
-def obtenerPixel(pix):
-    cont = 0
-    for i in range(28):
-        for j in range (28):
-            cont += 1
-            if cont == pix:
-                pos = (i, j)
-                break
-            
-    return pos
-
 # Dimension con la que vamos a trabajar. En nuestro caso 28*28
 def generar_clasificador_debil():    
     clasificador = clas.Clasificador(random.randint(0, 783), random.randint(0, 255), random.randint(0, 1))
@@ -68,7 +56,23 @@ def obtener_error(clasificador, X, Y, D):
 
 
 
-def obtenerClasificadorFuerte(classifier, imagen):
+def aplicarClasificadorFuerte(classifier, imagen):
+    (h, alphas) = classifier
+    N = len(imagen)
+    
+    fuerte = []
+    for i in range(len(alphas)):
+        if i == 0:
+            fuerte = np.double(alphas[i] * aplicar_clasificador_debil(h[i], imagen))
+        
+        else:
+            fuerte = fuerte + np.double(alphas[i] * aplicar_clasificador_debil(h[i], imagen))
+            
+    #return np.sign(fuerte)
+    return fuerte
+
+
+def aplicarClasificadorFuerteSigno(classifier, imagen):
     (h, alphas) = classifier
     N = len(imagen)
     
@@ -81,6 +85,5 @@ def obtenerClasificadorFuerte(classifier, imagen):
             fuerte = fuerte + np.double(alphas[i] * aplicar_clasificador_debil(h[i], imagen))
             
     return np.sign(fuerte)
-
 
 

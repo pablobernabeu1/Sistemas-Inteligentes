@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import numpy
+import numpy as np
 
 def mostrar_imagen(imagen):
     plt.figure()
@@ -16,7 +16,7 @@ def adaptar_conjuntos(mnist_X, mnist_Y, n):
         else:
             Y.append(-1)
             
-        arr = numpy.array(mnist_X[i])
+        arr = np.array(mnist_X[i])
         X.append(arr.flatten())
     
     return (X, Y)

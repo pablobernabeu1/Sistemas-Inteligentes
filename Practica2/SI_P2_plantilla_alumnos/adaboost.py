@@ -3,20 +3,11 @@ import numpy as np
 import math
 
 ##################################### Funciones auxiliares #####################################
-# Vector que inicializa el vector de probabilidades D inicialmente a 1/60000
-def inicializarD(D, N): 
-    for i in range(N):
-        D.append(1/N)
-
 # Vector que inicializa el vector de alphas a 0
 def inicializar(x, n):
     for i in range(n):
         x.append(0)
 
-# Vector que inicializa el vector de errores a infinito
-def inicializarErr(x, n):
-    for i in range(n):
-        x.append(float("inf"))
 
 ################################################################################################
 def entrenar(X, Y, T, A):

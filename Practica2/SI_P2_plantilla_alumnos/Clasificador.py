@@ -3,4 +3,3 @@ class Clasificador():
         self.pixel = pixel
         self.umbral = umbral
         self.direccion = direccion
-        self.aplicar = list()
