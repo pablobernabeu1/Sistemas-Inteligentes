@@ -21,8 +21,7 @@ def generar_clasificador_debil():
 
 
 def aplicar_clasificador_debil(clasificador, imagen):
-    posicion = obtenerPixel(clasificador.pixel) # Obtenemos la posicion que ocupa el pixel en la matriz de 28x28.
-    valorImagen = imagen[posicion[0]][posicion[1]] # Almacenamos el valor dentro de la escala de grises correspondiente al pixel.
+    valorImagen = imagen[clasificador.pixel] # Almacenamos el valor dentro de la escala de grises correspondiente al pixel.
     
     # Si la dirección del clasificador es <
     if clasificador.direccion == 0:
@@ -81,8 +80,7 @@ def obtenerClasificadorFuerte(classifier, imagen):
         else:
             fuerte = fuerte + np.double(alphas[i] * aplicar_clasificador_debil(h[i], imagen))
             
-    signo = np.sign(fuerte)
-    
-    return signo
+    return np.sign(fuerte)
+
 
 

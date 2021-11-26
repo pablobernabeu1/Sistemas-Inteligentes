@@ -15,15 +15,15 @@ mnist_Y = npzfile['y']
 N = len(mnist_Y)
 
 # Variable del número que queremos entrenar
-VALOR = 1
+VALOR = 0
 
 # Adaptar los conjuntos X e Y a AdaBoost
 (X0, Y0) = utils.adaptar_conjuntos(mnist_X, mnist_Y, VALOR) # Se le pasa el valor para el cual queremos entrenar
 
 # Veces a iterar el bucle exterior del algoritmo (clasificadores débiles que formarán el fuerte)
-T = 5
+T = 10
 # Veces a iterar el bucle interior del algoritmo (clasificadores débiles aleatorios generados para elegir el mejor)
-A = 5 
+A = 10
 
 # Obtenemos los mejores clasificadores débiles después de entrenar
 (h, alphas) = adaboost.entrenar(X0, Y0, T, A)
@@ -38,6 +38,11 @@ for i in range(len(Y0)):
 acierto = (cont * 100) / N
 
 print("El clasificador fuerte clasifica bien el " + str(acierto) + " de los números.")
+
+valores = ["2*2", "4*4", "6*6", "8*8", "10*10"]
+resultados = [90, 90.5, 9.2, 92.9, 93.34]
+
+utils.plot_arrays(valores, resultados, "AdaBoost para '0'")
 
 
 
